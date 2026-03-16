@@ -1,0 +1,44 @@
+{
+  "name": "SimplScenes",
+  "bundleIdentifier": "com.sudobuiltapps.simplscenes",
+  "displayName": "SimplScenes",
+  "version": "1.0",
+  "buildNumber": "1",
+  "platforms": ["tvOS"],
+  "minimumDeploymentTarget": {
+    "tvOS": "17.0"
+  },
+  "capabilities": [
+    "in-app-purchases"
+  ],
+  "storeKit": {
+    "subscriptions": [],
+    "products": [
+      {
+        "id": "com.sudobuiltapps.simplscenes.arctic",
+        "name": "Arctic Collection",
+        "price": "1.99",
+        "type": "non-consumable"
+      },
+      {
+        "id": "com.sudobuiltapps.simplscenes.tropical",
+        "name": "Tropical Collection",
+        "price": "1.99",
+        "type": "non-consumable"
+      },
+      {
+        "id": "com.sudobuiltapps.simplscenes.cosmic",
+        "name": "Cosmic Collection",
+        "price": "2.99",
+        "type": "non-consumable"
+      },
+      {
+        "id": "com.sudobuiltapps.simplscenes.all",
+        "name": "All Scenes Unlock",
+        "price": "4.99",
+        "type": "non-consumable"
+      }
+    ]
+  },
+  "storeKit2ConfigurationPath": "SimplScenes/StoreKit.storekit"
+}

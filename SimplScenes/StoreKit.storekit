@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StoreKit>
+    <Configuration>
+        <Group identifier="com.sudobuiltapps.simplscenes">
+            <Title>SimplScenes Products</Title>
+            <Product identifier="com.sudobuiltapps.simplscenes.arctic">
+                <Type>NonConsumable</Type>
+                <DisplayName>Arctic Collection</DisplayName>
+                <Price locale="en_US">1.99</Price>
+                <Description>Arctic Aurora, Forest Frost, Polar Night - 3 premium scenes</Description>
+            </Product>
+            <Product identifier="com.sudobuiltapps.simplscenes.tropical">
+                <Type>NonConsumable</Type>
+                <DisplayName>Tropical Collection</DisplayName>
+                <Price locale="en_US">1.99</Price>
+                <Description>Tropical Paradise, Jungle Rain, Beach Sunset - 3 premium scenes</Description>
+            </Product>
+            <Product identifier="com.sudobuiltapps.simplscenes.cosmic">
+                <Type>NonConsumable</Type>
+                <DisplayName>Cosmic Collection</DisplayName>
+                <Price locale="en_US">2.99</Price>
+                <Description>Space Nebula, Galaxy Swirl, Black Hole - 3 premium scenes</Description>
+            </Product>
+            <Product identifier="com.sudobuiltapps.simplscenes.all">
+                <Type>NonConsumable</Type>
+                <DisplayName>All Scenes Unlock</DisplayName>
+                <Price locale="en_US">4.99</Price>
+                <Description>Unlock all 15 premium scenes</Description>
+            </Product>
+        </Group>
+    </Configuration>
+</StoreKit>
