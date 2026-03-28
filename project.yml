@@ -1,0 +1,43 @@
+name: SimplScenes
+options:
+  bundleIdPrefix: com.sudobuiltapps
+  deploymentTarget:
+    tvOS: "17.0"
+  indentWidth: 2
+
+packages: {}
+
+targets:
+  SimplScenes:
+    type: application
+    platform: tvOS
+    deploymentTarget: "17.0"
+    bundleId: com.sudobuiltapps.simplscenes
+    sources:
+      - Sources/SimplScenes
+    resources:
+      - Resources
+    settings:
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: 9G5Y8G34K5
+      PRODUCT_BUNDLE_IDENTIFIER: com.sudobuiltapps.simplscenes
+      MARKETING_VERSION: "1.0"
+      CURRENT_PROJECT_VERSION: "1"
+      SDKROOT: appletvos
+      TVOS_DEPLOYMENT_TARGET: "17.0"
+    capabilities:
+      - inAppPurchase
+
+schemes:
+  SimplScenes:
+    build:
+      targets:
+        SimplScenes: all
+    run:
+      config: Debug
+      targets:
+        SimplScenes: all
+    test:
+      config: Debug
+      targets:
+        SimplScenes: all
