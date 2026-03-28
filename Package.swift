@@ -9,19 +9,19 @@ let package = Package(
     products: [
         .library(
             name: "SimplScenes",
-            targets: ["SimplScenes"])
+            targets: ["SimplScenes"]
+        )
     ],
     targets: [
         .target(
             name: "SimplScenes",
             dependencies: [],
-            resources: [
-                .process("Resources")
-            ]
+            path: "Sources/SimplScenes"
         ),
         .testTarget(
             name: "SimplScenesTests",
-            dependencies: ["SimplScenes"]
+            dependencies: ["SimplScenes"],
+            path: "Tests/SimplScenesTests"
         )
     ]
 )

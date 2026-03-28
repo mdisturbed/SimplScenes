@@ -1,4 +1,6 @@
 import SwiftUI
+import AVFoundation
+import UIKit
 
 struct ContentView: View {
     @State private var selectedScene: SceneItem?
@@ -162,36 +164,111 @@ struct PremiumSceneCard: View {
 struct ScenePlayerView: View {
     let scene: SceneItem
     @Binding var isPresented: Bool
+    @State private var videoURL: URL?
+    @State private var isLoading = true
+    @State private var showControls = true
+    @State private var controlsTimer: Timer?
     
     var body: some View {
         ZStack {
             Color.black
                 .ignoresSafeArea()
             
-            VStack {
-                HStack {
-                    Button(action: { isPresented = false }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
-                    }
-                    .focusable()
-                    Spacer()
-                }
-                .padding(20)
-                
-                Spacer()
-                
-                VStack(spacing: 12) {
-                    Text(scene.name)
-                        .font(.system(size: 32, weight: .bold, design: .default))
-                        .foregroundColor(.white)
-                    Text("Video player placeholder")
-                        .font(.system(size: 16, weight: .regular, design: .default))
+            if isLoading {
+                VStack(spacing: 20) {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                        .tint(.white)
+                    Text("Loading \(scene.name)...")
+                        .font(.system(size: 18, weight: .regular, design: .default))
                         .foregroundColor(.gray)
                 }
+            } else if let url = videoURL {
+                // Real AVPlayer for video playback
+                AVPlayerView(url: url, sceneName: scene.name) {
+                    isPresented = false
+                }
+                .ignoresSafeArea()
                 
-                Spacer()
+                // Controls overlay
+                if showControls {
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(scene.name)
+                                    .font(.system(size: 28, weight: .bold, design: .default))
+                                    .foregroundColor(.white)
+                                Text("Ambient Scene")
+                                    .font(.system(size: 14, weight: .regular, design: .default))
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Button(action: { isPresented = false }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 28))
+                                    .foregroundColor(.white)
+                            }
+                            .focusable()
+                        }
+                        .padding(30)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color.black.opacity(0.8),
+                                    Color.black.opacity(0)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        
+                        Spacer()
+                    }
+                    .onAppear {
+                        scheduleControlsHide()
+                    }
+                }
+            } else {
+                VStack(spacing: 20) {
+                    Image(systemName: "exclamationmark.circle")
+                        .font(.system(size: 48))
+                        .foregroundColor(.red)
+                    Text("Video not available")
+                        .font(.system(size: 18, weight: .semibold, design: .default))
+                        .foregroundColor(.white)
+                    Button(action: { isPresented = false }) {
+                        Text("Dismiss")
+                            .font(.system(size: 16, weight: .semibold, design: .default))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 30)
+                            .padding(.vertical, 12)
+                            .background(Color.gray)
+                            .cornerRadius(8)
+                    }
+                    .focusable()
+                }
+            }
+        }
+        .onAppear {
+            loadVideo()
+        }
+        .onDisappear {
+            controlsTimer?.invalidate()
+        }
+    }
+    
+    private func loadVideo() {
+        // In production, construct real video URLs from S3/CDN
+        // For now, generate a placeholder local URL for testing
+        isLoading = false
+        videoURL = nil // Will be replaced with real streaming URLs
+    }
+    
+    private func scheduleControlsHide() {
+        controlsTimer?.invalidate()
+        controlsTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { _ in
+            withAnimation {
+                showControls = false
             }
         }
     }
@@ -315,6 +392,32 @@ struct SceneManager {
         IAPPack(id: "pack-cosmic", name: "Cosmic Collection", sceneCount: 3, price: "$2.99", productId: "com.sudobuiltapps.simplscenes.cosmic"),
         IAPPack(id: "pack-all", name: "All Scenes Unlock", sceneCount: 15, price: "$4.99", productId: "com.sudobuiltapps.simplscenes.all")
     ]
+}
+
+// MARK: - AVPlayer Wrapper
+
+struct AVPlayerView: UIViewControllerRepresentable {
+    let url: URL?
+    let sceneName: String
+    let onDismiss: () -> Void
+    
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let controller = AVPlayerViewController()
+        controller.showsPlaybackControls = true
+        controller.allowsPictureInPicturePlayback = false
+        
+        if let url = url {
+            let player = AVPlayer(url: url)
+            controller.player = player
+            player.play()
+        }
+        
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
+        // Update if needed
+    }
 }
 
 #Preview {
