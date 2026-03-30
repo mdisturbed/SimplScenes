@@ -1,6 +1,6 @@
 import SwiftUI
 import AVFoundation
-import UIKit
+import AVKit
 
 struct ContentView: View {
     @State private var selectedScene: SceneItem?
@@ -258,10 +258,15 @@ struct ScenePlayerView: View {
     }
     
     private func loadVideo() {
-        // In production, construct real video URLs from S3/CDN
-        // For now, generate a placeholder local URL for testing
-        isLoading = false
-        videoURL = nil // Will be replaced with real streaming URLs
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Resolve video URL using VideoAssetManager
+            let url = scene.videoUrl
+            
+            DispatchQueue.main.async {
+                self.videoURL = url
+                self.isLoading = false
+            }
+        }
     }
     
     private func scheduleControlsHide() {
@@ -347,43 +352,28 @@ struct PackCard: View {
 
 // MARK: - Data Models
 
-struct SceneItem: Identifiable {
-    let id: String
-    let name: String
-    let price: String
-    let videoUrl: String?
-}
-
-struct IAPPack: Identifiable {
-    let id: String
-    let name: String
-    let sceneCount: Int
-    let price: String
-    let productId: String
-}
-
 // MARK: - Scene Manager
 
 struct SceneManager {
     static let freeScenes: [SceneItem] = [
-        SceneItem(id: "free-1", name: "Ocean Waves", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-2", name: "Forest Rain", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-3", name: "Fireplace", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-4", name: "Northern Lights", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-5", name: "Desert Sunset", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-6", name: "Mountain Stream", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-7", name: "City Night", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-8", name: "Cherry Blossoms", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-9", name: "Thunderstorm", price: "Free", videoUrl: nil),
-        SceneItem(id: "free-10", name: "Starfield", price: "Free", videoUrl: nil)
+        SceneItem(id: "free-1", name: "Ocean Waves", price: "Free"),
+        SceneItem(id: "free-2", name: "Forest Rain", price: "Free"),
+        SceneItem(id: "free-3", name: "Fireplace", price: "Free"),
+        SceneItem(id: "free-4", name: "Northern Lights", price: "Free"),
+        SceneItem(id: "free-5", name: "Desert Sunset", price: "Free"),
+        SceneItem(id: "free-6", name: "Mountain Stream", price: "Free"),
+        SceneItem(id: "free-7", name: "City Night", price: "Free"),
+        SceneItem(id: "free-8", name: "Cherry Blossoms", price: "Free"),
+        SceneItem(id: "free-9", name: "Thunderstorm", price: "Free"),
+        SceneItem(id: "free-10", name: "Starfield", price: "Free")
     ]
     
     static let premiumScenes: [SceneItem] = [
-        SceneItem(id: "prem-1", name: "Arctic Aurora", price: "$1.99", videoUrl: nil),
-        SceneItem(id: "prem-2", name: "Tropical Paradise", price: "$1.99", videoUrl: nil),
-        SceneItem(id: "prem-3", name: "Space Nebula", price: "$1.99", videoUrl: nil),
-        SceneItem(id: "prem-4", name: "Volcano Eruption", price: "$2.99", videoUrl: nil),
-        SceneItem(id: "prem-5", name: "Ocean Shipwreck", price: "$2.99", videoUrl: nil)
+        SceneItem(id: "prem-1", name: "Arctic Aurora", price: "$1.99"),
+        SceneItem(id: "prem-2", name: "Tropical Paradise", price: "$1.99"),
+        SceneItem(id: "prem-3", name: "Space Nebula", price: "$1.99"),
+        SceneItem(id: "prem-4", name: "Volcano Eruption", price: "$2.99"),
+        SceneItem(id: "prem-5", name: "Ocean Shipwreck", price: "$2.99")
     ]
     
     static let iapPacks: [IAPPack] = [
