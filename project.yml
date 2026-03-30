@@ -17,6 +17,10 @@ targets:
       - Sources/SimplScenes
     resources:
       - Resources
+    info:
+      path: Info.plist
+      properties:
+        UILaunchScreen: {}
     settings:
       CODE_SIGN_STYLE: Automatic
       DEVELOPMENT_TEAM: 9G5Y8G34K5
@@ -25,6 +29,7 @@ targets:
       CURRENT_PROJECT_VERSION: "1"
       SDKROOT: appletvos
       TVOS_DEPLOYMENT_TARGET: "17.0"
+      INFOPLIST_FILE: Info.plist
     capabilities:
       - inAppPurchase
 
@@ -37,6 +42,7 @@ schemes:
       config: Debug
       targets:
         SimplScenes: all
+      storeKitConfiguration: Resources/SimplScenes.storekit
     test:
       config: Debug
       targets:

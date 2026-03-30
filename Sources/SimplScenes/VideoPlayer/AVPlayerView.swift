@@ -1,4 +1,5 @@
 import AVFoundation
+import AVKit
 import SwiftUI
 
 /// AVPlayer wrapper for tvOS video playback
@@ -14,6 +15,15 @@ struct AVPlayerView: UIViewControllerRepresentable {
         
         if let url = url {
             let player = AVPlayer(url: url)
+            // Loop the ambient scene
+            NotificationCenter.default.addObserver(
+                forName: .AVPlayerItemDidPlayToEndTime,
+                object: player.currentItem,
+                queue: .main
+            ) { _ in
+                player.seek(to: .zero)
+                player.play()
+            }
             controller.player = player
             player.play()
         }
@@ -22,7 +32,7 @@ struct AVPlayerView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
-        // Update if needed
+        // No dynamic updates needed
     }
 }
 

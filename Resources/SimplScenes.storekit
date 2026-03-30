@@ -1,0 +1,130 @@
+{
+  "identifier" : "E8A27D1A-4B5C-4F1E-8C3D-9A2E6F7B8D0C",
+  "nonRenewableSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "arctic_001",
+      "localizations" : [
+        {
+          "description" : "3 stunning Arctic ambient scenes",
+          "displayName" : "Arctic Collection",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sudobuiltapps.simplscenes.arctic",
+      "referenceName" : "Arctic Collection",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "tropical_001",
+      "localizations" : [
+        {
+          "description" : "3 tropical paradise ambient scenes",
+          "displayName" : "Tropical Collection",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sudobuiltapps.simplscenes.tropical",
+      "referenceName" : "Tropical Collection",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "cosmic_001",
+      "localizations" : [
+        {
+          "description" : "3 cosmic and space ambient scenes",
+          "displayName" : "Cosmic Collection",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sudobuiltapps.simplscenes.cosmic",
+      "referenceName" : "Cosmic Collection",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "all_001",
+      "localizations" : [
+        {
+          "description" : "Unlock all 15 ambient scenes",
+          "displayName" : "All Scenes Unlock",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.sudobuiltapps.simplscenes.all",
+      "referenceName" : "All Scenes Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "simplscenes_001",
+    "_developerTeamID" : "9G5Y8G34K5",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : null,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Transaction"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

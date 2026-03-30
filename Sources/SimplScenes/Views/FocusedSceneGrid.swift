@@ -21,7 +21,6 @@ struct FocusedSceneGrid: View {
                         .onTapGesture {
                             onPurchase?()
                         }
-                        .focusable()
                 } else {
                     SceneCard(
                         scene: scene,
@@ -32,25 +31,44 @@ struct FocusedSceneGrid: View {
                     .onTapGesture {
                         selectedScene = scene
                     }
-                    .focusable()
                 }
             }
         }
-        .padding(40)
+        .padding(.horizontal, 40)
     }
 }
 
-/// Updated SceneCard with focus visual feedback
+// MARK: - Scene Card with focus visual feedback
+
 struct SceneCard: View {
     let scene: SceneItem
     let isSelected: Bool
-    let isFocused: Bool
+    var isFocused: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            // Thumbnail background
+            // Thumbnail background with gradient
             Rectangle()
-                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color(red: 0.12, green: 0.12, blue: 0.14),
+                            Color(red: 0.08, green: 0.08, blue: 0.10)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+            
+            // Scene icon (placeholder for real thumbnails)
+            VStack {
+                Image(systemName: sceneIcon(for: scene.name))
+                    .font(.system(size: 36))
+                    .foregroundColor(Color(red: 0.4, green: 0.5, blue: 0.7).opacity(0.4))
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 30)
             
             // Focus border (tvOS remote focus)
             if isFocused {
@@ -83,8 +101,85 @@ struct SceneCard: View {
         .frame(height: 180)
         .cornerRadius(12)
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
-        // Add scale animation on focus
+        // Scale animation on focus
         .scaleEffect(isFocused ? 1.05 : 1.0)
         .animation(.easeInOut(duration: 0.2), value: isFocused)
+    }
+    
+    /// Map scene names to SF Symbols for placeholder thumbnails
+    private func sceneIcon(for name: String) -> String {
+        switch name.lowercased() {
+        case let n where n.contains("ocean"): return "water.waves"
+        case let n where n.contains("forest") || n.contains("rain"): return "leaf.fill"
+        case let n where n.contains("fire"): return "flame.fill"
+        case let n where n.contains("northern") || n.contains("aurora"): return "sparkles"
+        case let n where n.contains("desert") || n.contains("sunset"): return "sun.horizon.fill"
+        case let n where n.contains("mountain") || n.contains("stream"): return "mountain.2.fill"
+        case let n where n.contains("city") || n.contains("night"): return "building.2.fill"
+        case let n where n.contains("cherry") || n.contains("blossom"): return "leaf.arrow.circlepath"
+        case let n where n.contains("thunder") || n.contains("storm"): return "cloud.bolt.fill"
+        case let n where n.contains("star"): return "star.fill"
+        default: return "play.rectangle.fill"
+        }
+    }
+}
+
+// MARK: - Premium Scene Card
+
+struct PremiumSceneCard: View {
+    let scene: SceneItem
+    let onPurchase: () -> Void
+    
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color(red: 0.15, green: 0.13, blue: 0.08),
+                            Color(red: 0.10, green: 0.08, blue: 0.05)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+            
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(scene.name)
+                            .font(.system(size: 18, weight: .semibold, design: .default))
+                            .foregroundColor(.white)
+                        Text(scene.price)
+                            .font(.system(size: 14, weight: .regular, design: .default))
+                            .foregroundColor(.yellow)
+                    }
+                    Spacer()
+                }
+                
+                Spacer()
+                
+                Button(action: onPurchase) {
+                    Text("Unlock")
+                        .font(.system(size: 14, weight: .semibold, design: .default))
+                        .foregroundColor(.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(8)
+                        .background(Color.yellow)
+                        .cornerRadius(6)
+                }
+                .focusable()
+            }
+            .padding(20)
+            
+            // Premium badge
+            Image(systemName: "crown.fill")
+                .font(.system(size: 16))
+                .foregroundColor(.yellow)
+                .padding(12)
+        }
+        .frame(height: 180)
+        .cornerRadius(12)
+        .background(Color(red: 0.1, green: 0.1, blue: 0.1))
     }
 }

@@ -11,14 +11,18 @@
 		9432E450498752C93532BF10 /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3EC1381426EE12FD774A1 /* AVPlayerView.swift */; };
 		99DF5426A127E8E35AF4E066 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FA0B2ED00F3A1C500084E /* StoreManager.swift */; };
 		B7DA4A5E0AC11C0E6E97C118 /* SimplScenesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */; };
+		C56406A7EE13AA6C103D0EFE /* VideoAssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEFA40AF3D9DCCF23F33C38 /* VideoAssetManager.swift */; };
 		C906EB83A6A8382E3714E9FF /* FocusedSceneGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D23C23D98C803C8FE38C0C /* FocusedSceneGrid.swift */; };
+		FD3D31B6510B151EC69101A2 /* SceneItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAED98EB421815F2AD825EF /* SceneItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplScenesApp.swift; sourceTree = "<group>"; };
 		3AD3EC1381426EE12FD774A1 /* AVPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerView.swift; sourceTree = "<group>"; };
 		3C8E743B2BAC2E81228DE8DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5EAED98EB421815F2AD825EF /* SceneItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneItem.swift; sourceTree = "<group>"; };
 		899FA0B2ED00F3A1C500084E /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		8DEFA40AF3D9DCCF23F33C38 /* VideoAssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAssetManager.swift; sourceTree = "<group>"; };
 		E9AD46CDCA7FE13974DD0886 /* SimplScenes.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimplScenes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2D23C23D98C803C8FE38C0C /* FocusedSceneGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedSceneGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -37,12 +41,22 @@
 			children = (
 				3C8E743B2BAC2E81228DE8DC /* ContentView.swift */,
 				1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */,
+				855E0A32E6CF6A83EA8CF3D1 /* Models */,
 				F8FBE4EAEA135283CAA7DA29 /* Store */,
 				E329B70BAF2015814A8CE523 /* VideoPlayer */,
 				157F13776F5C4D73F2000F48 /* Views */,
 			);
 			name = SimplScenes;
 			path = Sources/SimplScenes;
+			sourceTree = "<group>";
+		};
+		855E0A32E6CF6A83EA8CF3D1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5EAED98EB421815F2AD825EF /* SceneItem.swift */,
+				8DEFA40AF3D9DCCF23F33C38 /* VideoAssetManager.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		894D9BCFA7893302F60D1E98 = {
@@ -140,8 +154,10 @@
 				9432E450498752C93532BF10 /* AVPlayerView.swift in Sources */,
 				693658E3D1CC63B8FF48BF45 /* ContentView.swift in Sources */,
 				C906EB83A6A8382E3714E9FF /* FocusedSceneGrid.swift in Sources */,
+				FD3D31B6510B151EC69101A2 /* SceneItem.swift in Sources */,
 				B7DA4A5E0AC11C0E6E97C118 /* SimplScenesApp.swift in Sources */,
 				99DF5426A127E8E35AF4E066 /* StoreManager.swift in Sources */,
+				C56406A7EE13AA6C103D0EFE /* VideoAssetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +235,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -239,6 +256,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

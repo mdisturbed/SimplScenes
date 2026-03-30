@@ -1,8 +1,10 @@
 import SwiftUI
 import AVFoundation
 import AVKit
+import StoreKit
 
 struct ContentView: View {
+    @StateObject private var storeManager = StoreManager.shared
     @State private var selectedScene: SceneItem?
     @State private var isPresentingStore = false
     
@@ -37,29 +39,43 @@ struct ContentView: View {
                 .padding(.horizontal, 40)
                 .padding(.vertical, 30)
                 
-                // Scene Grid
+                // Scene Grid — uses FocusedSceneGrid for proper tvOS focus management
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 300))], spacing: 20) {
-                        ForEach(SceneManager.freeScenes, id: \.id) { scene in
-                            SceneCard(scene: scene, isSelected: selectedScene?.id == scene.id)
-                                .onTapGesture {
-                                    selectedScene = scene
-                                }
-                                .focusable()
+                    VStack(spacing: 30) {
+                        // Free scenes section
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Free Scenes")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 40)
+                            
+                            FocusedSceneGrid(
+                                scenes: SceneManager.freeScenes,
+                                selectedScene: $selectedScene,
+                                isPremium: false,
+                                onPurchase: nil
+                            )
                         }
                         
-                        ForEach(SceneManager.premiumScenes, id: \.id) { scene in
-                            PremiumSceneCard(scene: scene, onPurchase: {
-                                isPresentingStore = true
-                            })
-                            .focusable()
+                        // Premium scenes section
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Premium Scenes")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundColor(.yellow)
+                                .padding(.horizontal, 40)
+                            
+                            FocusedSceneGrid(
+                                scenes: SceneManager.premiumScenes,
+                                selectedScene: $selectedScene,
+                                isPremium: true,
+                                onPurchase: { isPresentingStore = true }
+                            )
                         }
                     }
-                    .padding(40)
                 }
             }
             
-            // Scene Player (overlay)
+            // Scene Player (fullscreen overlay)
             if let selected = selectedScene {
                 ScenePlayerView(scene: selected, isPresented: Binding(
                     get: { selectedScene != nil },
@@ -68,94 +84,8 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $isPresentingStore) {
-            StoreView(isPresented: $isPresentingStore)
+            StoreView(isPresented: $isPresentingStore, storeManager: storeManager)
         }
-    }
-}
-
-// MARK: - Scene Card Views
-
-struct SceneCard: View {
-    let scene: SceneItem
-    let isSelected: Bool
-    
-    var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            // Thumbnail
-            Rectangle()
-                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
-            
-            // Selection indicator
-            if isSelected {
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color(red: 0.4, green: 0.6, blue: 1.0), lineWidth: 3)
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Spacer()
-                Text(scene.name)
-                    .font(.system(size: 18, weight: .semibold, design: .default))
-                    .foregroundColor(.white)
-                Text("Free")
-                    .font(.system(size: 12, weight: .regular, design: .default))
-                    .foregroundColor(.green)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color(red: 0.1, green: 0.3, blue: 0.1))
-                    .cornerRadius(4)
-            }
-            .padding(20)
-        }
-        .frame(height: 180)
-        .cornerRadius(12)
-        .background(Color(red: 0.1, green: 0.1, blue: 0.1))
-    }
-}
-
-struct PremiumSceneCard: View {
-    let scene: SceneItem
-    let onPurchase: () -> Void
-    
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            Rectangle()
-                .fill(Color(red: 0.15, green: 0.15, blue: 0.15))
-            
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(scene.name)
-                            .font(.system(size: 18, weight: .semibold, design: .default))
-                            .foregroundColor(.white)
-                        Text(scene.price)
-                            .font(.system(size: 14, weight: .regular, design: .default))
-                            .foregroundColor(.yellow)
-                    }
-                    Spacer()
-                }
-                
-                Button(action: onPurchase) {
-                    Text("Unlock")
-                        .font(.system(size: 14, weight: .semibold, design: .default))
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity)
-                        .padding(8)
-                        .background(Color.yellow)
-                        .cornerRadius(6)
-                }
-                .focusable()
-            }
-            .padding(20)
-            
-            // Premium badge
-            Image(systemName: "crown.fill")
-                .font(.system(size: 16))
-                .foregroundColor(.yellow)
-                .padding(12)
-        }
-        .frame(height: 180)
-        .cornerRadius(12)
-        .background(Color(red: 0.1, green: 0.1, blue: 0.1))
     }
 }
 
@@ -229,20 +159,24 @@ struct ScenePlayerView: View {
                     }
                 }
             } else {
+                // No video available — show placeholder
                 VStack(spacing: 20) {
-                    Image(systemName: "exclamationmark.circle")
-                        .font(.system(size: 48))
-                        .foregroundColor(.red)
-                    Text("Video not available")
-                        .font(.system(size: 18, weight: .semibold, design: .default))
+                    Image(systemName: "play.rectangle")
+                        .font(.system(size: 64))
+                        .foregroundColor(.gray)
+                    Text(scene.name)
+                        .font(.system(size: 24, weight: .bold, design: .default))
                         .foregroundColor(.white)
+                    Text("Video content coming soon")
+                        .font(.system(size: 16, weight: .regular, design: .default))
+                        .foregroundColor(.gray)
                     Button(action: { isPresented = false }) {
-                        Text("Dismiss")
+                        Text("Back")
                             .font(.system(size: 16, weight: .semibold, design: .default))
                             .foregroundColor(.black)
                             .padding(.horizontal, 30)
                             .padding(.vertical, 12)
-                            .background(Color.gray)
+                            .background(Color.white)
                             .cornerRadius(8)
                     }
                     .focusable()
@@ -258,11 +192,9 @@ struct ScenePlayerView: View {
     }
     
     private func loadVideo() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            // Resolve video URL using VideoAssetManager
+        Task {
             let url = scene.videoUrl
-            
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.videoURL = url
                 self.isLoading = false
             }
@@ -283,6 +215,7 @@ struct ScenePlayerView: View {
 
 struct StoreView: View {
     @Binding var isPresented: Bool
+    @ObservedObject var storeManager: StoreManager
     
     var body: some View {
         ZStack {
@@ -305,22 +238,109 @@ struct StoreView: View {
                 .padding(.horizontal, 40)
                 .padding(.vertical, 20)
                 
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(SceneManager.iapPacks, id: \.id) { pack in
-                            PackCard(pack: pack)
+                if storeManager.isLoading {
+                    Spacer()
+                    ProgressView("Loading products...")
+                        .tint(.white)
+                        .foregroundColor(.gray)
+                    Spacer()
+                } else if storeManager.products.isEmpty {
+                    // Fallback to static pack data when StoreKit products aren't available
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            ForEach(SceneManager.iapPacks, id: \.id) { pack in
+                                PackCard(
+                                    pack: pack,
+                                    isPurchased: storeManager.isPurchased(pack.productId),
+                                    onPurchase: {
+                                        // Products not loaded — show info
+                                    }
+                                )
                                 .focusable()
+                            }
                         }
+                        .padding(40)
                     }
-                    .padding(40)
+                } else {
+                    // Real StoreKit products available
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            ForEach(storeManager.products, id: \.id) { product in
+                                ProductCard(
+                                    product: product,
+                                    isPurchased: storeManager.isPurchased(product.id),
+                                    onPurchase: {
+                                        Task {
+                                            _ = try? await storeManager.purchase(product)
+                                        }
+                                    }
+                                )
+                                .focusable()
+                            }
+                        }
+                        .padding(40)
+                    }
+                }
+                
+                if let error = storeManager.lastError {
+                    Text("Error: \(error.localizedDescription)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.red)
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 10)
                 }
             }
         }
     }
 }
 
+// MARK: - Product Card (StoreKit Product)
+
+struct ProductCard: View {
+    let product: Product
+    let isPurchased: Bool
+    let onPurchase: () -> Void
+    
+    var body: some View {
+        HStack(spacing: 20) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(product.displayName)
+                    .font(.system(size: 18, weight: .semibold, design: .default))
+                    .foregroundColor(.white)
+                Text(product.description)
+                    .font(.system(size: 14, weight: .regular, design: .default))
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            if isPurchased {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 24))
+                    .foregroundColor(.green)
+            } else {
+                Button(action: onPurchase) {
+                    Text(product.displayPrice)
+                        .font(.system(size: 16, weight: .semibold, design: .default))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color.yellow)
+                        .cornerRadius(6)
+                }
+                .focusable()
+            }
+        }
+        .padding(20)
+        .background(Color(red: 0.1, green: 0.1, blue: 0.1))
+        .cornerRadius(10)
+    }
+}
+
+// MARK: - Pack Card (Static fallback)
+
 struct PackCard: View {
     let pack: IAPPack
+    let isPurchased: Bool
+    let onPurchase: () -> Void
     
     var body: some View {
         HStack(spacing: 20) {
@@ -333,24 +353,28 @@ struct PackCard: View {
                     .foregroundColor(.gray)
             }
             Spacer()
-            Button(action: {}) {
-                Text(pack.price)
-                    .font(.system(size: 16, weight: .semibold, design: .default))
-                    .foregroundColor(.black)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Color.yellow)
-                    .cornerRadius(6)
+            if isPurchased {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 24))
+                    .foregroundColor(.green)
+            } else {
+                Button(action: onPurchase) {
+                    Text(pack.price)
+                        .font(.system(size: 16, weight: .semibold, design: .default))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color.yellow)
+                        .cornerRadius(6)
+                }
+                .focusable()
             }
-            .focusable()
         }
         .padding(20)
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
         .cornerRadius(10)
     }
 }
-
-// MARK: - Data Models
 
 // MARK: - Scene Manager
 
@@ -382,32 +406,6 @@ struct SceneManager {
         IAPPack(id: "pack-cosmic", name: "Cosmic Collection", sceneCount: 3, price: "$2.99", productId: "com.sudobuiltapps.simplscenes.cosmic"),
         IAPPack(id: "pack-all", name: "All Scenes Unlock", sceneCount: 15, price: "$4.99", productId: "com.sudobuiltapps.simplscenes.all")
     ]
-}
-
-// MARK: - AVPlayer Wrapper
-
-struct AVPlayerView: UIViewControllerRepresentable {
-    let url: URL?
-    let sceneName: String
-    let onDismiss: () -> Void
-    
-    func makeUIViewController(context: Context) -> AVPlayerViewController {
-        let controller = AVPlayerViewController()
-        controller.showsPlaybackControls = true
-        controller.allowsPictureInPicturePlayback = false
-        
-        if let url = url {
-            let player = AVPlayer(url: url)
-            controller.player = player
-            player.play()
-        }
-        
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
-        // Update if needed
-    }
 }
 
 #Preview {
