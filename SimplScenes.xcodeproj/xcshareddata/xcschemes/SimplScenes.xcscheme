@@ -21,6 +21,20 @@
                ReferencedContainer = "container:SimplScenes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7A58111E212CF100A7101DED"
+               BuildableName = "SimplScenesTests.xctest"
+               BlueprintName = "SimplScenesTests"
+               ReferencedContainer = "container:SimplScenes.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -39,6 +53,17 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7A58111E212CF100A7101DED"
+               BuildableName = "SimplScenesTests.xctest"
+               BlueprintName = "SimplScenesTests"
+               ReferencedContainer = "container:SimplScenes.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

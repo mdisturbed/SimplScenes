@@ -16,7 +16,10 @@ targets:
     sources:
       - Sources/SimplScenes
     resources:
-      - Resources
+      - path: Resources
+        buildPhase: resources
+      - path: SimplScenes/StoreKit.storekit
+        buildPhase: none
     settings:
       CODE_SIGN_STYLE: Automatic
       DEVELOPMENT_TEAM: 9G5Y8G34K5
@@ -25,19 +28,44 @@ targets:
       CURRENT_PROJECT_VERSION: "1"
       SDKROOT: appletvos
       TVOS_DEPLOYMENT_TARGET: "17.0"
+      GENERATE_INFOPLIST_FILE: "YES"
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: SimplScenes
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        UIUserInterfaceStyle: Dark
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
     capabilities:
       - inAppPurchase
+
+  SimplScenesTests:
+    type: bundle.unit-test
+    platform: tvOS
+    deploymentTarget: "17.0"
+    sources:
+      - Tests/SimplScenesTests
+    dependencies:
+      - target: SimplScenes
+    settings:
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: 9G5Y8G34K5
+      GENERATE_INFOPLIST_FILE: "YES"
 
 schemes:
   SimplScenes:
     build:
       targets:
         SimplScenes: all
+        SimplScenesTests: [test]
     run:
       config: Debug
-      targets:
-        SimplScenes: all
     test:
       config: Debug
       targets:
-        SimplScenes: all
+        - SimplScenesTests

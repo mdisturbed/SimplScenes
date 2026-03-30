@@ -1,68 +1,66 @@
 import AVFoundation
+import AVKit
 import SwiftUI
 
-/// AVPlayer wrapper for tvOS video playback
-struct AVPlayerView: UIViewControllerRepresentable {
-    let url: URL?
-    let sceneName: String
+/// AVPlayer wrapper for tvOS ambient video playback with looping support.
+struct LoopingPlayerView: UIViewControllerRepresentable {
+    let url: URL
     let onDismiss: () -> Void
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onDismiss: onDismiss)
+    }
     
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let controller = AVPlayerViewController()
-        controller.showsPlaybackControls = true
+        controller.showsPlaybackControls = false // Ambient mode — no controls
         controller.allowsPictureInPicturePlayback = false
         
-        if let url = url {
-            let player = AVPlayer(url: url)
-            controller.player = player
-            player.play()
-        }
+        let playerItem = AVPlayerItem(url: url)
+        let player = AVPlayer(playerItem: playerItem)
+        player.isMuted = false
+        controller.player = player
+        
+        // Set up looping via notification
+        context.coordinator.observeLoop(player: player, item: playerItem)
+        
+        player.play()
         
         return controller
     }
     
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
-        // Update if needed
-    }
-}
-
-/// Scene video model with streaming support
-struct SceneVideo {
-    let id: String
-    let sceneName: String
-    let videoURL: URL?
-    let thumbnailURL: URL?
-    let duration: TimeInterval
-    let description: String
-}
-
-/// Video cache manager for efficient streaming
-actor VideoCache {
-    static let shared = VideoCache()
-    private var urlSession: URLSession
+    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
     
-    init() {
-        let config = URLSessionConfiguration.default
-        config.waitsForConnectivity = true
-        config.timeoutIntervalForResource = 300 // 5 min timeout
-        self.urlSession = URLSession(configuration: config)
+    static func dismantleUIViewController(_ uiViewController: AVPlayerViewController, coordinator: Coordinator) {
+        uiViewController.player?.pause()
+        uiViewController.player = nil
+        coordinator.cleanup()
     }
     
-    /// Fetch video metadata (lightweight header check)
-    func getVideoInfo(url: URL) async -> (size: Int64?, duration: TimeInterval?) {
-        var request = URLRequest(url: url)
-        request.httpMethod = "HEAD"
+    class Coordinator {
+        let onDismiss: () -> Void
+        private var loopObserver: NSObjectProtocol?
         
-        do {
-            let (_, response) = try await urlSession.data(for: request)
-            if let httpResponse = response as? HTTPURLResponse {
-                let size = httpResponse.value(forHTTPHeaderField: "Content-Length").flatMap(Int64.init)
-                return (size, nil)
-            }
-        } catch {
-            return (nil, nil)
+        init(onDismiss: @escaping () -> Void) {
+            self.onDismiss = onDismiss
         }
         
-        return (nil, nil)
+        func observeLoop(player: AVPlayer, item: AVPlayerItem) {
+            loopObserver = NotificationCenter.default.addObserver(
+                forName: .AVPlayerItemDidPlayToEndTime,
+                object: item,
+                queue: .main
+            ) { [weak player] _ in
+                player?.seek(to: .zero)
+                player?.play()
+            }
+        }
+        
+        func cleanup() {
+            if let observer = loopObserver {
+                NotificationCenter.default.removeObserver(observer)
+                loopObserver = nil
+            }
+        }
     }
 }

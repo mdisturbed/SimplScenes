@@ -7,48 +7,67 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FEDC7494A1C50655E8B1AB4 /* VideoAssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB440C83AA27638CEC13D277 /* VideoAssetManager.swift */; };
 		693658E3D1CC63B8FF48BF45 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8E743B2BAC2E81228DE8DC /* ContentView.swift */; };
 		9432E450498752C93532BF10 /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD3EC1381426EE12FD774A1 /* AVPlayerView.swift */; };
 		99DF5426A127E8E35AF4E066 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FA0B2ED00F3A1C500084E /* StoreManager.swift */; };
 		B7DA4A5E0AC11C0E6E97C118 /* SimplScenesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */; };
-		C906EB83A6A8382E3714E9FF /* FocusedSceneGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D23C23D98C803C8FE38C0C /* FocusedSceneGrid.swift */; };
+		CC9190AECF248F93F4BFD726 /* SceneCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AA16772C373F6FA0A77DAD /* SceneCatalogTests.swift */; };
+		DA38ECCA12099A0635D92A37 /* SceneCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935A9E4B0D39931F26C9CCB /* SceneCatalog.swift */; };
+		FD3D31B6510B151EC69101A2 /* SceneItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAED98EB421815F2AD825EF /* SceneItem.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0DE8B00515F60C5DB188C40C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6B21E51B2174F9F4F3EA133 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30FCB5125CA0ECFD21F1397F;
+			remoteInfo = SimplScenes;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1D930F7F854F826964ABB0DF /* SimplScenesTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimplScenesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplScenesApp.swift; sourceTree = "<group>"; };
+		29AA16772C373F6FA0A77DAD /* SceneCatalogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCatalogTests.swift; sourceTree = "<group>"; };
 		3AD3EC1381426EE12FD774A1 /* AVPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerView.swift; sourceTree = "<group>"; };
 		3C8E743B2BAC2E81228DE8DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5EAED98EB421815F2AD825EF /* SceneItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneItem.swift; sourceTree = "<group>"; };
 		899FA0B2ED00F3A1C500084E /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		C935A9E4B0D39931F26C9CCB /* SceneCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCatalog.swift; sourceTree = "<group>"; };
 		E9AD46CDCA7FE13974DD0886 /* SimplScenes.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimplScenes.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2D23C23D98C803C8FE38C0C /* FocusedSceneGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedSceneGrid.swift; sourceTree = "<group>"; };
+		EB440C83AA27638CEC13D277 /* VideoAssetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAssetManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		157F13776F5C4D73F2000F48 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F2D23C23D98C803C8FE38C0C /* FocusedSceneGrid.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		38AADB5F334ECC060A8FD9B0 /* SimplScenes */ = {
 			isa = PBXGroup;
 			children = (
 				3C8E743B2BAC2E81228DE8DC /* ContentView.swift */,
 				1FF91029EF8EEDB1E4C05DEC /* SimplScenesApp.swift */,
+				855E0A32E6CF6A83EA8CF3D1 /* Models */,
 				F8FBE4EAEA135283CAA7DA29 /* Store */,
 				E329B70BAF2015814A8CE523 /* VideoPlayer */,
-				157F13776F5C4D73F2000F48 /* Views */,
 			);
 			name = SimplScenes;
 			path = Sources/SimplScenes;
+			sourceTree = "<group>";
+		};
+		855E0A32E6CF6A83EA8CF3D1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C935A9E4B0D39931F26C9CCB /* SceneCatalog.swift */,
+				5EAED98EB421815F2AD825EF /* SceneItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		894D9BCFA7893302F60D1E98 = {
 			isa = PBXGroup;
 			children = (
 				38AADB5F334ECC060A8FD9B0 /* SimplScenes */,
+				CE2ACDBF1895897FF3D46FFF /* SimplScenesTests */,
 				C0D18D726B4804B836CB1EE0 /* Products */,
 			);
 			indentWidth = 2;
@@ -58,14 +77,25 @@
 			isa = PBXGroup;
 			children = (
 				E9AD46CDCA7FE13974DD0886 /* SimplScenes.app */,
+				1D930F7F854F826964ABB0DF /* SimplScenesTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CE2ACDBF1895897FF3D46FFF /* SimplScenesTests */ = {
+			isa = PBXGroup;
+			children = (
+				29AA16772C373F6FA0A77DAD /* SceneCatalogTests.swift */,
+			);
+			name = SimplScenesTests;
+			path = Tests/SimplScenesTests;
 			sourceTree = "<group>";
 		};
 		E329B70BAF2015814A8CE523 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
 				3AD3EC1381426EE12FD774A1 /* AVPlayerView.swift */,
+				EB440C83AA27638CEC13D277 /* VideoAssetManager.swift */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -98,6 +128,24 @@
 			productReference = E9AD46CDCA7FE13974DD0886 /* SimplScenes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7A58111E212CF100A7101DED /* SimplScenesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 667A39848CC8B9EEB08C5C75 /* Build configuration list for PBXNativeTarget "SimplScenesTests" */;
+			buildPhases = (
+				24E6880724CEE65CCD102631 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B85BE6330F5EA2F60FD5D8A /* PBXTargetDependency */,
+			);
+			name = SimplScenesTests;
+			packageProductDependencies = (
+			);
+			productName = SimplScenesTests;
+			productReference = 1D930F7F854F826964ABB0DF /* SimplScenesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -108,6 +156,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					30FCB5125CA0ECFD21F1397F = {
+						DevelopmentTeam = 9G5Y8G34K5;
+						ProvisioningStyle = Automatic;
+					};
+					7A58111E212CF100A7101DED = {
 						DevelopmentTeam = 9G5Y8G34K5;
 						ProvisioningStyle = Automatic;
 					};
@@ -128,24 +180,43 @@
 			projectRoot = "";
 			targets = (
 				30FCB5125CA0ECFD21F1397F /* SimplScenes */,
+				7A58111E212CF100A7101DED /* SimplScenesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		24E6880724CEE65CCD102631 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC9190AECF248F93F4BFD726 /* SceneCatalogTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		423C8A7AD30E3D50C9366CC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9432E450498752C93532BF10 /* AVPlayerView.swift in Sources */,
 				693658E3D1CC63B8FF48BF45 /* ContentView.swift in Sources */,
-				C906EB83A6A8382E3714E9FF /* FocusedSceneGrid.swift in Sources */,
+				DA38ECCA12099A0635D92A37 /* SceneCatalog.swift in Sources */,
+				FD3D31B6510B151EC69101A2 /* SceneItem.swift in Sources */,
 				B7DA4A5E0AC11C0E6E97C118 /* SimplScenesApp.swift in Sources */,
 				99DF5426A127E8E35AF4E066 /* StoreManager.swift in Sources */,
+				4FEDC7494A1C50655E8B1AB4 /* VideoAssetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B85BE6330F5EA2F60FD5D8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30FCB5125CA0ECFD21F1397F /* SimplScenes */;
+			targetProxy = 0DE8B00515F60C5DB188C40C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0FFBF7884F7AAA5BD10225C7 /* Debug */ = {
@@ -219,6 +290,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -239,6 +312,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -247,6 +322,26 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sudobuiltapps.simplscenes;
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Release;
+		};
+		4214BBE3544F4EC0A375900D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sudobuiltapps.SimplScenesTests;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimplScenes.app/SimplScenes";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Release;
@@ -307,6 +402,26 @@
 			};
 			name = Release;
 		};
+		E4251F94786102B5F7931FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9G5Y8G34K5;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sudobuiltapps.SimplScenesTests;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimplScenes.app/SimplScenes";
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -324,6 +439,15 @@
 			buildConfigurations = (
 				0FFBF7884F7AAA5BD10225C7 /* Debug */,
 				6C2C5C001AEF45794BF76B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		667A39848CC8B9EEB08C5C75 /* Build configuration list for PBXNativeTarget "SimplScenesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4251F94786102B5F7931FB8 /* Debug */,
+				4214BBE3544F4EC0A375900D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
